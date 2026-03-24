@@ -45,6 +45,27 @@ Production-oriented monorepo for a Zoom-class conferencing system with:
 - JWT-based authz/authn with rate-limited APIs
 - Structured JSON logs and metrics endpoints
 
+
+## Run Instructions
+
+For complete step-by-step commands (prerequisites, boot order, smoke tests, load tests, and shutdown), see:
+
+- `docs/runbook.md`
+
+Quick start:
+
+```bash
+cp .env.example .env
+docker compose -f infra/docker/docker-compose.yml up -d
+pnpm install
+# then run in separate terminals:
+pnpm dev:auth
+pnpm dev:chat
+pnpm dev:signaling
+pnpm dev:media
+pnpm dev:desktop
+```
+
 ## Status
 
 This repository provides a production-grade baseline architecture and implementation scaffolding for enterprise conferencing. It is designed to be extended with hardware acceleration modules, cloud recording pipelines, and advanced AI features.
