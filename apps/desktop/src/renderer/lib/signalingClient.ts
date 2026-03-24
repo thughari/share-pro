@@ -15,33 +15,39 @@ export class SignalingClient {
     private readonly onError: (message: string) => void
   ) {}
 
-  connect(): void {
+  connect(): Promise<void> {
     this.closedManually = false;
-    this.ws = new WebSocket(this.url);
 
-    this.ws.onopen = () => {
-      this.attempts = 0;
-      this.onConnection(true);
-    };
+    return new Promise((resolve) => {
+      this.ws = new WebSocket(this.url);
 
-    this.ws.onmessage = (event) => {
-      try {
-        this.onEvent(JSON.parse(event.data));
-      } catch {
-        this.onError('Received invalid event from signaling server');
-      }
-    };
+      this.ws.onopen = () => {
+        this.attempts = 0;
+        this.onConnection(true);
+        resolve();
+      };
 
-    this.ws.onerror = () => {
-      this.onError('WebSocket connection error');
-    };
+      this.ws.onmessage = (event) => {
+        try {
+          this.onEvent(JSON.parse(event.data));
+        } catch {
+          this.onError('Received invalid event from signaling server');
+        }
+      };
 
-    this.ws.onclose = () => {
-      this.onConnection(false);
-      if (this.closedManually) return;
-      const delay = Math.min(10000, 500 * 2 ** this.attempts++);
-      setTimeout(() => this.connect(), delay);
-    };
+      this.ws.onerror = () => {
+        this.onError('WebSocket connection error');
+      };
+
+      this.ws.onclose = () => {
+        this.onConnection(false);
+        if (this.closedManually) return;
+        const delay = Math.min(10000, 500 * 2 ** this.attempts++);
+        setTimeout(() => {
+          void this.connect();
+        }, delay);
+      };
+    });
   }
 
   disconnect(): void {

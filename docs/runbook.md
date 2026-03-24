@@ -145,3 +145,14 @@ rm -rf node_modules pnpm-lock.yaml
 pnpm store prune
 pnpm install
 ```
+
+
+### Verify cross-tab video/screen share
+
+1. Open the app in two tabs/windows.
+2. Use the same `Room ID` in both tabs and different `User ID`s.
+3. Click **Join** in both tabs and allow camera/mic permissions.
+4. Click **Share Screen** in one tab and accept the browser prompt.
+5. The second tab should show the remote video tile with shared content.
+
+If remote video stays empty, confirm signaling server is reachable at `VITE_SIGNALING_URL` and both tabs joined the same room.
