@@ -1,0 +1,10 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: signaling
+    static_configs:
+      - targets: ['signaling:8080']
+  - job_name: media
+    static_configs:
+      - targets: ['media:8888']
