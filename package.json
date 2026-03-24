@@ -11,5 +11,14 @@
     "dev:chat": "pnpm --filter @share/chat dev",
     "build": "pnpm -r build",
     "test": "pnpm -r test"
+  },
+  "engines": {
+    "node": ">=20 <24",
+    "pnpm": ">=9 <10"
+  },
+  "pnpm": {
+    "overrides": {
+      "esbuild": "0.27.4"
+    }
   }
 }

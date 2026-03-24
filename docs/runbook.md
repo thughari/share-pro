@@ -4,7 +4,7 @@ This guide gives exact commands for local development, service-by-service runs, 
 
 ## 1) Prerequisites
 
-- Node.js 20+
+- Node.js 20 LTS (recommended; avoid Node 24 for now due native postinstall incompatibilities)
 - pnpm 9+
 - Docker + Docker Compose
 - (Optional) k6 for load testing
@@ -13,6 +13,7 @@ Verify:
 
 ```bash
 node -v
+corepack enable
 pnpm -v
 docker -v
 docker compose version
@@ -117,4 +118,30 @@ k6 run tests/load/signaling-k6.js
 
 ```bash
 docker compose -f infra/docker/docker-compose.yml down
+```
+
+
+## Troubleshooting
+
+### If `pnpm install` fails on esbuild/Node version mismatch
+
+1. Ensure you are on Node 20:
+
+```bash
+node -v
+```
+
+2. Switch to Node 20 (nvm):
+
+```bash
+nvm install 20
+nvm use 20
+```
+
+3. Clean install artifacts and retry:
+
+```bash
+rm -rf node_modules pnpm-lock.yaml
+pnpm store prune
+pnpm install
 ```

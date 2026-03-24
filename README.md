@@ -22,6 +22,13 @@ Production-oriented monorepo for a Zoom-class conferencing system with:
 - `docs` — architecture and operational docs
 - `tests/load` — k6 load tests for signaling
 
+## Toolchain Requirements
+
+- Node.js **20 LTS** (recommended)
+- pnpm 9 (`corepack enable`)
+
+> Note: Node 24 can trigger native postinstall/version mismatches (for example `esbuild`) in this stack.
+
 ## Quick Start
 
 1. Install pnpm and Node.js 20+
@@ -44,7 +51,6 @@ Production-oriented monorepo for a Zoom-class conferencing system with:
 - Waiting room and host role enforcement
 - JWT-based authz/authn with rate-limited APIs
 - Structured JSON logs and metrics endpoints
-
 
 ## Run Instructions
 
